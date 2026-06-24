@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, viewport-fit=cover, user-scalable=no">
+<title>NEST 就労選択支援アセスメント</title>
+<!-- iOS / iPadOS standalone web-app -->
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="NEST選択支援">
+<meta name="theme-color" content="#2f6f4f">
+<meta name="format-detection" content="telephone=no">
+<link rel="apple-touch-icon" href="data:image/png;base64,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">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect width='64' height='64' rx='14' fill='%232f6f4f'/><text x='32' y='45' font-size='34' font-family='Arial' font-weight='bold' fill='white' text-anchor='middle'>N</text></svg>">
+<style>
+  :root{
+    --ink:#1c2421;
+    --ink-soft:#4a5651;
+    --line:#d8ddd6;
+    --line-soft:#e8ebe6;
+    --paper:#f7f8f5;
+    --card:#ffffff;
+    --accent:#2f6f4f;      /* NEST green */
+    --accent-soft:#e3efe7;
+    --self:#5b87a3;        /* 本人(自己評価) */
+    --self-soft:#e6eef3;
+    --warn:#b5552a;
+    --shadow:0 1px 3px rgba(28,36,33,.06),0 4px 16px rgba(28,36,33,.05);
+    --r:14px;
+    --safe-t:env(safe-area-inset-top);
+    --safe-b:env(safe-area-inset-bottom);
+    --safe-l:env(safe-area-inset-left);
+    --safe-r:env(safe-area-inset-right);
+  }
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  html,body{margin:0;padding:0}
+  body{
+    font-family:-apple-system,BlinkMacSystemFont,"Hiragino Sans","Hiragino Kaku Gothic ProN","Yu Gothic",sans-serif;
+    background:var(--paper);
+    color:var(--ink);
+    line-height:1.6;
+    -webkit-text-size-adjust:100%;
+    padding-bottom:calc(94px + var(--safe-b));
+    overscroll-behavior-y:contain;
+  }
+  /* ---- header ---- */
+  header{
+    position:sticky;top:0;z-index:50;
+    background:rgba(247,248,245,.92);
+    backdrop-filter:saturate(180%) blur(12px);
+    -webkit-backdrop-filter:saturate(180%) blur(12px);
+    border-bottom:1px solid var(--line);
+    padding:calc(14px + var(--safe-t)) calc(18px + var(--safe-r)) 12px calc(18px + var(--safe-l));
+  }
+  .brand{display:flex;align-items:center;gap:10px}
+  .brand b{font-size:18px;letter-spacing:.04em}
+  .brand span.sub{font-size:12px;color:var(--ink-soft);letter-spacing:.08em}
+  .tagline{font-size:11.5px;color:var(--ink-soft);margin-top:2px}
+  .saved-flag{font-size:11px;color:var(--accent);margin-left:6px;white-space:nowrap}
+  /* ---- header menu ---- */
+  .menu-wrap{margin-left:auto;position:relative}
+  .menu-btn{
+    width:36px;height:36px;border-radius:10px;border:1px solid var(--line);
+    background:#fff;font-size:20px;line-height:1;color:var(--ink-soft);cursor:pointer;
+    display:flex;align-items:center;justify-content:center;
+  }
+  .menu-btn:active{transform:scale(.95)}
+  .menu{position:absolute;right:0;top:44px;background:#fff;border:1px solid var(--line);
+    border-radius:12px;box-shadow:var(--shadow);overflow:hidden;min-width:210px;z-index:80}
+  .menu[hidden]{display:none}
+  .menu button{display:block;width:100%;text-align:left;padding:13px 15px;font-size:14px;
+    font-family:inherit;background:#fff;border:none;border-bottom:1px solid var(--line-soft);
+    color:var(--ink);cursor:pointer}
+  .menu button:last-child{border-bottom:none}
+  .menu button:active{background:var(--accent-soft)}
+  .menu button.danger{color:var(--warn)}
+  /* ---- progress ---- */
+  .steps{display:flex;gap:6px;margin-top:12px;overflow-x:auto;padding-bottom:2px;scrollbar-width:none}
+  .steps::-webkit-scrollbar{display:none}
+  .step{
+    flex:0 0 auto;font-size:12px;padding:6px 12px;border-radius:20px;
+    background:var(--card);border:1px solid var(--line);color:var(--ink-soft);
+    white-space:nowrap;cursor:pointer;transition:.15s;
+  }
+  .step.active{background:var(--accent);border-color:var(--accent);color:#fff;font-weight:600}
+  .step.done{border-color:var(--accent);color:var(--accent)}
+  .step .tick{font-size:10px;margin-left:3px;opacity:.9}
+  /* ---- main ---- */
+  main{max-width:760px;margin:0 auto;padding:18px calc(18px + var(--safe-r)) 18px calc(18px + var(--safe-l))}
+  .panel{display:none;animation:fade .25s ease}
+  .panel.show{display:block}
+  @keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+  .section-title{font-size:15px;font-weight:700;margin:4px 0 2px;display:flex;align-items:center;gap:8px}
+  .section-title .num{
+    font-size:11px;background:var(--accent-soft);color:var(--accent);
+    min-width:30px;height:24px;padding:0 6px;border-radius:7px;display:inline-flex;align-items:center;justify-content:center;font-weight:700;flex:0 0 auto;
+  }
+  .section-desc{font-size:12.5px;color:var(--ink-soft);margin:0 0 14px;padding-left:38px}
+  .legal-pill{display:inline-block;font-size:10.5px;color:var(--accent);background:var(--accent-soft);border-radius:6px;padding:2px 7px;margin-left:6px;font-weight:600;vertical-align:middle}
+  /* ---- card / fields ---- */
+  .card{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:16px;margin-bottom:14px;box-shadow:var(--shadow)}
+  label.fld{display:block;margin-bottom:14px}
+  label.fld:last-child{margin-bottom:0}
+  .fld .lab{font-size:13px;font-weight:600;margin-bottom:6px;display:block}
+  .fld .hint{font-size:11.5px;color:var(--ink-soft);font-weight:400}
+  input[type=text],input[type=date],input[type=number],textarea,select{
+    width:100%;font-size:16px;font-family:inherit;color:var(--ink);
+    border:1px solid var(--line);border-radius:10px;padding:11px 12px;background:#fff;
+    transition:.15s;
+  }
+  textarea{min-height:70px;resize:vertical;line-height:1.55}
+  input:focus,textarea:focus,select:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-soft)}
+  .row{display:flex;gap:10px;flex-wrap:wrap}
+  .row > *{flex:1;min-width:120px}
+  /* ---- rating (協同評価：本人＋支援者) ---- */
+  .rate-item{padding:14px 0;border-bottom:1px solid var(--line-soft)}
+  .rate-item:last-child{border-bottom:none;padding-bottom:0}
+  .rate-item:first-child{padding-top:0}
+  .rate-q{font-size:13.5px;font-weight:600;margin-bottom:3px}
+  .rate-sub{font-size:11.5px;color:var(--ink-soft);margin-bottom:6px}
+  .rater{margin-top:8px}
+  .rater-lab{font-size:11px;font-weight:700;color:var(--ink-soft);margin-bottom:4px;display:flex;align-items:center;gap:6px}
+  .rater-lab .dot{width:8px;height:8px;border-radius:50%;flex:0 0 auto}
+  .rater.self .dot{background:var(--self)}
+  .rater.staff .dot{background:var(--accent)}
+  .scale{display:flex;gap:5px}
+  .scale button{
+    flex:1;border:1px solid var(--line);background:#fff;border-radius:9px;
+    padding:7px 2px;font-size:11px;font-family:inherit;color:var(--ink-soft);cursor:pointer;transition:.12s;
+    display:flex;flex-direction:column;align-items:center;gap:1px;min-height:46px;justify-content:center;
+  }
+  .scale button .n{font-size:15px;font-weight:700;color:var(--ink)}
+  .rater.self .scale button.sel{background:var(--self);border-color:var(--self)}
+  .rater.staff .scale button.sel{background:var(--accent);border-color:var(--accent)}
+  .scale button.sel .n,.scale button.sel{color:#fff}
+  .scale button.na.sel{background:var(--ink-soft);border-color:var(--ink-soft)}
+  .obs{margin-top:10px}
+  .obs input{font-size:14px;padding:8px 10px}
+  /* ---- chips ---- */
+  .chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:4px}
+  .chip{
+    border:1px solid var(--line);background:#fff;border-radius:20px;padding:8px 14px;
+    font-size:13px;font-family:inherit;color:var(--ink);cursor:pointer;transition:.12s;
+  }
+  .chip.sel{background:var(--accent);border-color:var(--accent);color:#fff;font-weight:600}
+  /* ---- result ---- */
+  .verdict{border-radius:var(--r);padding:18px;margin-bottom:14px;border:1px solid var(--line);background:var(--card);box-shadow:var(--shadow)}
+  .verdict h3{margin:0 0 4px;font-size:13px;color:var(--ink-soft);font-weight:600;letter-spacing:.04em}
+  .bars{margin-top:6px}
+  .bar-row{display:flex;align-items:center;gap:10px;margin-bottom:9px}
+  .bar-row .name{font-size:12.5px;width:120px;flex:0 0 auto;color:var(--ink-soft)}
+  .bar-track{flex:1;height:9px;background:var(--line-soft);border-radius:6px;overflow:hidden}
+  .bar-fill{height:100%;background:var(--accent);border-radius:6px;width:0;transition:width .6s cubic-bezier(.2,.8,.2,1)}
+  .bar-val{font-size:12px;font-weight:700;width:42px;text-align:right;flex:0 0 auto}
+  .fillbar{font-size:11.5px;color:var(--ink-soft);margin-top:2px}
+  .legal-map{list-style:none;margin:6px 0 0;padding:0}
+  .legal-map li{font-size:12.5px;padding:8px 0;border-bottom:1px solid var(--line-soft);display:flex;gap:8px}
+  .legal-map li:last-child{border-bottom:none}
+  .legal-map .k{font-weight:700;color:var(--accent);flex:0 0 auto}
+  .ref-tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+  .ref-tags .t{font-size:11.5px;padding:4px 10px;border-radius:14px;background:var(--paper);border:1px solid var(--line);color:var(--ink-soft)}
+  .note{font-size:12px;color:var(--ink-soft);background:var(--paper);border:1px dashed var(--line);border-radius:10px;padding:10px 12px;margin-top:10px}
+  .note.strong{border-color:var(--warn);color:#7a3a1c;background:#fbf2ec}
+  /* ---- nav ---- */
+  .navbar{
+    position:fixed;bottom:0;left:0;right:0;z-index:60;
+    background:rgba(247,248,245,.94);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
+    border-top:1px solid var(--line);
+    padding:12px calc(16px + var(--safe-r)) calc(12px + var(--safe-b)) calc(16px + var(--safe-l));
+    display:flex;gap:10px;
+  }
+  .navbar-inner{display:flex;gap:10px;max-width:760px;margin:0 auto;width:100%}
+  .btn{
+    flex:1;font-family:inherit;font-size:15px;font-weight:600;border-radius:11px;
+    padding:13px;cursor:pointer;border:1px solid var(--line);background:#fff;color:var(--ink);transition:.12s;
+  }
+  .btn.primary{background:var(--accent);border-color:var(--accent);color:#fff;flex:2}
+  .btn:active{transform:scale(.985)}
+  .btn.ghost{flex:0 0 auto;padding:13px 16px}
+  .btn:disabled{opacity:.4;cursor:default}
+  /* ---- iPad / large screens ---- */
+  @media (min-width:820px){
+    main{max-width:880px}
+    body{font-size:16.5px}
+    .section-title{font-size:17px}
+    .section-desc{font-size:13.5px}
+    .rate-q{font-size:14.5px}
+    .scale button{padding:9px 2px;min-height:50px;font-size:12px}
+    .scale button .n{font-size:16px}
+    .navbar-inner{max-width:880px}
+  }
+  /* ---- print ---- */
+  @media print{
+    header,.navbar,.steps,.no-print{display:none!important}
+    body{background:#fff;padding:0}
+    .panel{display:block!important;page-break-inside:avoid;margin-bottom:18px}
+    main{max-width:none;padding:0}
+    .card,.verdict{box-shadow:none;border-color:#bbb}
+    .print-head{display:block!important}
+  }
+  .print-head{display:none;text-align:center;border-bottom:2px solid var(--ink);padding-bottom:8px;margin-bottom:16px}
+  .print-head b{font-size:18px}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="brand">
+    <b>NEST</b><span class="sub">就労選択支援アセスメント</span>
+    <span class="saved-flag" id="savedFlag"></span>
+    <div class="menu-wrap">
+      <button class="menu-btn" id="menuBtn" aria-label="メニュー">⋮</button>
+      <div class="menu" id="menu" hidden>
+        <button data-act="export">バックアップを書き出す</button>
+        <button data-act="import">バックアップを読み込む</button>
+        <button data-act="print">PDF / 印刷</button>
+        <button data-act="new" class="danger">新規作成（入力を消去）</button>
+      </div>
+    </div>
+  </div>
+  <div class="tagline">本人と一緒に、合った働き方を選ぶ（本人本位の協同評価）</div>
+  <div class="steps" id="steps"></div>
+</header>
+
+<input type="file" id="fileIn" accept="application/json,.json" hidden>
+
+<main>
+  <!-- print header -->
+  <div class="print-head">
+    <b>就労選択支援　アセスメント結果票</b><br>
+    <span id="printMeta" style="font-size:12px"></span>
+  </div>
+
+  <!-- 0. 基本情報 -->
+  <section class="panel show" data-step="基本情報">
+    <div class="section-title"><span class="num">基本</span>基本情報</div>
+    <p class="section-desc">利用者・実施日・担当を記録します。</p>
+    <div class="card">
+      <label class="fld"><span class="lab">利用者氏名</span><input type="text" id="f_name" placeholder="例）山田 太郎"></label>
+      <div class="row">
+        <label class="fld"><span class="lab">実施日</span><input type="date" id="f_date"></label>
+        <label class="fld"><span class="lab">回数</span><input type="text" id="f_session" placeholder="例）1回目／全3回"></label>
+      </div>
+      <div class="row">
+        <label class="fld"><span class="lab">担当（就労選択支援員）</span><input type="text" id="f_staff" placeholder="例）上野"></label>
+        <label class="fld"><span class="lab">体験した作業</span><input type="text" id="f_task" placeholder="例）清掃／農園／カフェ補助"></label>
+      </div>
+      <label class="fld"><span class="lab">障害の種類・程度／手帳等<span class="hint"> ／ 法定事項①</span></span>
+        <input type="text" id="f_disability" placeholder="例）療育手帳B／精神2級／身体○級 等"></label>
+    </div>
+  </section>
+
+  <!-- Ⅰ 希望・ニーズ -->
+  <section class="panel" data-step="Ⅰ 希望・ニーズ">
+    <div class="section-title"><span class="num">Ⅰ</span>就労に関する希望・ニーズ<span class="legal-pill">法定②</span></div>
+    <p class="section-desc">本人がどう働きたいか・これまでの経験。<b>本人本位の選択の起点です。</b>（JEEDシートⅠ相当）</p>
+    <div class="card">
+      <label class="fld"><span class="lab">これまでの就労・実習・体験（職歴）</span>
+        <textarea id="f_history" placeholder="アルバイト・実習・前事業所など。期間や内容を本人の言葉で"></textarea></label>
+      <label class="fld"><span class="lab">働く動機・目的</span>
+        <textarea id="f_motive" placeholder="なぜ働きたいか（収入／生活リズム／人との関わり／自己実現 等）"></textarea></label>
+      <label class="fld"><span class="lab">希望する働き方・職種・仕事の内容</span>
+        <textarea id="f_wish" placeholder="やってみたい仕事、避けたい仕事を本人の言葉で"></textarea></label>
+      <label class="fld"><span class="lab">希望する労働条件・通勤</span>
+        <textarea id="f_condition" placeholder="希望の勤務時間・日数・曜日、通勤手段・通勤時間 等"></textarea></label>
+      <label class="fld"><span class="lab">配慮してほしいこと（合理的配慮の希望）</span>
+        <textarea id="f_request" placeholder="本人が希望する配慮・苦手なこと"></textarea></label>
+      <label class="fld"><span class="lab">強み・得意なこと（ストレングス）</span>
+        <textarea id="f_strength" placeholder="得意な作業・好きなこと・続けられること"></textarea></label>
+      <label class="fld"><span class="lab">現在利用している支援・サービス</span>
+        <textarea id="f_services" placeholder="相談支援・医療・家族・他事業所 等"></textarea></label>
+      <label class="fld"><span class="lab">「真剣に働きたい」意欲をどう感じたか<span class="hint"> ／ 支援員所見</span></span>
+        <textarea id="f_serious" placeholder="工賃目当てか、働くこと自体への意欲か。観察された手がかり"></textarea></label>
+      <div class="fld"><span class="lab">本人が関心を示した方向</span>
+        <div class="chips" id="intentChips"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Ⅱ 基本的事項（協同評価） -->
+  <section class="panel" data-step="Ⅱ-a 作業遂行"><div id="secExec"></div></section>
+  <section class="panel" data-step="Ⅱ-b 職業生活"><div id="secLife"></div></section>
+  <section class="panel" data-step="Ⅱ-c 対人関係"><div id="secComm"></div></section>
+
+  <!-- Ⅲ 就労継続の環境・必要な配慮 -->
+  <section class="panel" data-step="Ⅲ 環境・配慮">
+    <div class="section-title"><span class="num">Ⅲ</span>就労継続のための環境・必要な配慮<span class="legal-pill">法定③④</span></div>
+    <p class="section-desc">どんな環境・支援があれば力を発揮し、働き続けられるか。（JEEDシートⅢ相当）</p>
+    <div class="card">
+      <div class="fld"><span class="lab">あると働きやすい環境・配慮<span class="hint"> ／ 当てはまるものを選択</span></span>
+        <div class="chips" id="envChips"></div>
+      </div>
+      <label class="fld"><span class="lab">作業環境・配慮の具体（自由記述）</span>
+        <textarea id="f_env_note" placeholder="作業面／コミュニケーション面／時間・ペース面で必要な配慮を具体的に"></textarea></label>
+      <label class="fld"><span class="lab">通勤手段・移動の支援</span>
+        <textarea id="f_commute" placeholder="通勤手段、移動の練習・支援の要否"></textarea></label>
+      <label class="fld"><span class="lab">医療・生活面の支え</span>
+        <textarea id="f_medical" placeholder="服薬・通院の管理、生活面で支えになっている人・サービス"></textarea></label>
+    </div>
+  </section>
+
+  <!-- 結果票：協同所見 -->
+  <section class="panel" data-step="協同所見・結果票">
+    <div class="section-title"><span class="num">結果</span>協同所見・アセスメント結果票</div>
+    <p class="section-desc">本人と協同してまとめます。<b>進路は点数で決めず、本人と一緒に選びます。</b>（JEEDシートⅣ相当）</p>
+
+    <div class="verdict">
+      <h3>領域別スコア（協同評価ベース・参考）</h3>
+      <div class="bars" id="bars"></div>
+      <div class="fillbar" id="fillbar"></div>
+    </div>
+
+    <div class="verdict">
+      <h3>厚生労働大臣の定める4事項の整理</h3>
+      <ul class="legal-map">
+        <li><span class="k">①</span><span>障害の種類及び程度 … 基本情報（障害種別）／Ⅱ-b 職業生活・健康</span></li>
+        <li><span class="k">②</span><span>就労に関する意向及び経験 … Ⅰ 希望・ニーズ</span></li>
+        <li><span class="k">③</span><span>就労に必要な配慮及び支援 … Ⅲ 環境・必要な配慮</span></li>
+        <li><span class="k">④</span><span>適切な作業の環境 … Ⅲ 環境／Ⅱ-a 作業遂行</span></li>
+      </ul>
+    </div>
+
+    <div class="verdict">
+      <h3>話し合いの参考メモ（進路の方向）</h3>
+      <div class="ref-tags" id="reco"></div>
+      <div class="note strong" id="recoNote"></div>
+    </div>
+
+    <div class="card">
+      <label class="fld"><span class="lab">協同所見（総合）<span class="hint"> ／ 本人と確認しながら記述・行政提出兼用</span></span>
+        <textarea id="f_summary" style="min-height:130px" placeholder="アセスメントを通じて本人と確認した適性・強み・必要な配慮・本人の希望と、推奨する選択肢とその理由を記述"></textarea></label>
+      <label class="fld"><span class="lab">本人へのフィードバック要旨</span>
+        <textarea id="f_fb" placeholder="本人に伝える前向きな見立てと次の一歩"></textarea></label>
+      <label class="fld"><span class="lab">本人の受け止め・自己理解の一致</span>
+        <textarea id="f_self_understanding" placeholder="所見について本人がどう受け止めたか、本人の自己理解との一致・相違"></textarea></label>
+    </div>
+  </section>
+</main>
+
+<div class="navbar no-print">
+  <div class="navbar-inner">
+    <button class="btn ghost" id="btnPrint">PDF/印刷</button>
+    <button class="btn" id="btnPrev">戻る</button>
+    <button class="btn primary" id="btnNext">次へ</button>
+  </div>
+</div>
+
+<script>
+/* ===========================================================
+   評価尺度（地域裁量：厚労省は全国一律の固定尺度を定めていない）
+   富士圏域の共通様式が判明したら、ここを差し替えて整合する。
+   現状は暫定で4段階＋該当外。
+   =========================================================== */
+const SCALE = [
+  {v:1, label:'要支援'},
+  {v:2, label:'一部支援'},
+  {v:3, label:'概ね可'},
+  {v:4, label:'安定'},
+];
+const SCALE_NA = {v:0, label:'該当外'};
+const SCALE_MAX = Math.max.apply(null, SCALE.map(s=>s.v));
+
+/* ---------- Ⅱ 基本的事項：協同評価セクション（作業遂行/職業生活/対人関係） ---------- */
+const SECTIONS = [
+  {key:'exec', title:'Ⅱ-a 作業遂行', desc:'実際の作業場面での力。選択支援の中核。', host:'secExec', items:[
+    {q:'作業の理解', sub:'手順を理解し再現できるか'},
+    {q:'正確さ・丁寧さ', sub:'仕上がりの質'},
+    {q:'持続力・集中', sub:'一定時間取り組み続けられるか'},
+    {q:'報告・確認', sub:'分からない時に聞ける／報告できる'},
+  ]},
+  {key:'life', title:'Ⅱ-b 職業生活', desc:'働き続ける土台（通所・体調・自己管理）。', host:'secLife', items:[
+    {q:'継続した通所', sub:'安定して通えるか'},
+    {q:'時間・約束を守る', sub:'開始時間・休憩のけじめ'},
+    {q:'身だしなみ・準備', sub:'作業に適した状態で臨めるか'},
+    {q:'体調・生活リズム', sub:'体調の波・睡眠・食事の安定'},
+    {q:'服薬・通院管理', sub:'必要な健康管理ができるか'},
+  ]},
+  {key:'comm', title:'Ⅱ-c 対人関係', desc:'職場での人との関わり方。', host:'secComm', items:[
+    {q:'あいさつ・応答', sub:'基本的なやり取り'},
+    {q:'協調性', sub:'周囲と合わせて動けるか'},
+    {q:'指示の受け入れ', sub:'指示・注意を受け止められるか'},
+    {q:'感情のコントロール', sub:'うまくいかない時の落ち着き'},
+    {q:'相談できる', sub:'困りごとを支援員に出せるか'},
+  ]},
+];
+const INTENTS = ['一般就労を目指したい','まず就労移行で力をつけたい','A型で働きながら','B型で自分のペースで','まだ決めかねている'];
+const ENV_CHIPS = ['静かな環境','少人数・個別','決まった手順','マイペースで進められる','こまめな声かけ','短時間から','休憩を取りやすい','視覚的な指示'];
+const TEXT_FIELDS = [
+  'f_name','f_date','f_session','f_staff','f_task','f_disability',
+  'f_history','f_motive','f_wish','f_condition','f_request','f_strength','f_services','f_serious',
+  'f_env_note','f_commute','f_medical',
+  'f_summary','f_fb','f_self_understanding'
+];
+const STORE_KEY = 'nest_assess_v2';
+
+/* ---------- state ---------- */
+let state = JSON.parse(localStorage.getItem(STORE_KEY)||'{}');
+state.ratings = state.ratings||{};   /* keys: <secKey>_<i>_self / _staff */
+state.obs = state.obs||{};
+state.intents = state.intents||[];
+state.env = state.env||[];
+if(!state.f_date){
+  const d=new Date();
+  state.f_date = d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
+}
+
+/* ---------- build rating sections（本人＋支援者の2行＝協同評価） ---------- */
+function scaleHtml(id){
+  const btns = SCALE.map(s=>`<button data-v="${s.v}"><span class="n">${s.v}</span>${s.label}</button>`).join('');
+  return `<div class="scale" data-id="${id}">${btns}<button class="na" data-v="${SCALE_NA.v}">－<br>${SCALE_NA.label}</button></div>`;
+}
+SECTIONS.forEach(sec=>{
+  const host = document.getElementById(sec.host);
+  let html = `<div class="section-title"><span class="num">Ⅱ</span>${sec.title}</div>
+    <p class="section-desc">${sec.desc}　<b>本人＝自己評価／支援者＝協同評価</b></p><div class="card">`;
+  sec.items.forEach((it,i)=>{
+    const base = sec.key+'_'+i;
+    html += `<div class="rate-item">
+      <div class="rate-q">${it.q}</div>
+      <div class="rate-sub">${it.sub}</div>
+      <div class="rater self"><div class="rater-lab"><span class="dot"></span>本人（自己評価）</div>${scaleHtml(base+'_self')}</div>
+      <div class="rater staff"><div class="rater-lab"><span class="dot"></span>支援者（協同評価）</div>${scaleHtml(base+'_staff')}</div>
+      <div class="obs"><input type="text" data-obs="${base}" placeholder="観察メモ・本人と支援者で見立てが違った点など（任意）"></div>
+    </div>`;
+  });
+  html += `</div>`;
+  host.innerHTML = html;
+});
+
+/* chips（意向・環境配慮） */
+function buildChips(hostId, list, stateArr){
+  const host=document.getElementById(hostId);
+  list.forEach(t=>{
+    const b=document.createElement('button');
+    b.className='chip';b.textContent=t;b.dataset.val=t;
+    host.appendChild(b);
+  });
+}
+buildChips('intentChips', INTENTS, state.intents);
+buildChips('envChips', ENV_CHIPS, state.env);
+
+/* ---------- restore ---------- */
+function restore(){
+  TEXT_FIELDS.forEach(id=>{
+    if(state[id]!==undefined && state[id]!=='') { const el=document.getElementById(id); if(el) el.value=state[id]; }
+  });
+  document.querySelectorAll('.scale').forEach(s=>{
+    const v=state.ratings[s.dataset.id];
+    if(v!==undefined) s.querySelector(`[data-v="${v}"]`)?.classList.add('sel');
+  });
+  document.querySelectorAll('[data-obs]').forEach(i=>{ if(state.obs[i.dataset.obs]) i.value=state.obs[i.dataset.obs]; });
+  document.querySelectorAll('#intentChips .chip').forEach(c=>{ if(state.intents.includes(c.dataset.val)) c.classList.add('sel'); });
+  document.querySelectorAll('#envChips .chip').forEach(c=>{ if(state.env.includes(c.dataset.val)) c.classList.add('sel'); });
+}
+
+/* ---------- save ---------- */
+function save(){
+  TEXT_FIELDS.forEach(id=>{ const el=document.getElementById(id); if(el) state[id]=el.value; });
+  localStorage.setItem(STORE_KEY,JSON.stringify(state));
+  const f=document.getElementById('savedFlag');f.textContent='✓ 保存済み';
+  clearTimeout(window._st);window._st=setTimeout(()=>f.textContent='',1500);
+  refreshSteps();
+}
+
+/* ---------- interactions ---------- */
+document.querySelectorAll('.scale').forEach(s=>{
+  s.addEventListener('click',e=>{
+    const btn=e.target.closest('button');if(!btn)return;
+    s.querySelectorAll('button').forEach(b=>b.classList.remove('sel'));
+    btn.classList.add('sel');
+    state.ratings[s.dataset.id]=+btn.dataset.v;save();
+  });
+});
+document.querySelectorAll('[data-obs]').forEach(i=>i.addEventListener('input',()=>{state.obs[i.dataset.obs]=i.value;save();}));
+document.querySelectorAll('#intentChips .chip').forEach(c=>c.addEventListener('click',()=>{
+  c.classList.toggle('sel');
+  state.intents = [...document.querySelectorAll('#intentChips .chip.sel')].map(x=>x.dataset.val);save();
+}));
+document.querySelectorAll('#envChips .chip').forEach(c=>c.addEventListener('click',()=>{
+  c.classList.toggle('sel');
+  state.env = [...document.querySelectorAll('#envChips .chip.sel')].map(x=>x.dataset.val);save();
+}));
+document.querySelectorAll('input,textarea').forEach(el=>el.addEventListener('input',save));
+
+/* ---------- header menu ---------- */
+const menuBtn=document.getElementById('menuBtn'), menu=document.getElementById('menu');
+menuBtn.addEventListener('click',e=>{e.stopPropagation();menu.hidden=!menu.hidden;});
+document.addEventListener('click',()=>{menu.hidden=true;});
+menu.addEventListener('click',e=>{
+  const b=e.target.closest('button');if(!b)return;
+  menu.hidden=true;
+  const act=b.dataset.act;
+  if(act==='new') newAssessment();
+  else if(act==='export') exportData();
+  else if(act==='import') document.getElementById('fileIn').click();
+  else if(act==='print'){ renderResult(); setTimeout(()=>window.print(),200); }
+});
+document.getElementById('fileIn').addEventListener('change',e=>{
+  if(e.target.files[0]) importData(e.target.files[0]);
+  e.target.value='';
+});
+
+/* ---------- data management ---------- */
+function exportData(){
+  save();
+  const blob=new Blob([JSON.stringify(state,null,2)],{type:'application/json'});
+  const nm=(state.f_name||'無記名').replace(/[\\/:*?"<>|\s]/g,'_');
+  const dt=(state.f_date||'未記入');
+  const a=document.createElement('a');
+  a.href=URL.createObjectURL(blob);
+  a.download=`NEST選択支援_${nm}_${dt}.json`;
+  document.body.appendChild(a);a.click();
+  setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove();},500);
+}
+function importData(file){
+  const r=new FileReader();
+  r.onload=()=>{
+    try{
+      const obj=JSON.parse(r.result);
+      if(typeof obj!=='object'||obj===null) throw new Error('形式が不正です');
+      if(!confirm('現在の入力を、読み込んだ内容で置き換えます。よろしいですか？')) return;
+      obj.ratings=obj.ratings||{}; obj.obs=obj.obs||{}; obj.intents=obj.intents||[]; obj.env=obj.env||[];
+      localStorage.setItem(STORE_KEY,JSON.stringify(obj));
+      location.reload();
+    }catch(err){ alert('読み込めませんでした：'+err.message); }
+  };
+  r.readAsText(file);
+}
+function newAssessment(){
+  if(!confirm('入力内容をすべて消去して新規作成します。よろしいですか？\n（必要なら先にバックアップを書き出してください）')) return;
+  localStorage.removeItem(STORE_KEY);
+  location.reload();
+}
+
+/* ---------- step nav ---------- */
+const panels=[...document.querySelectorAll('.panel')];
+const stepHost=document.getElementById('steps');
+let cur=0;
+panels.forEach((p,i)=>{
+  const s=document.createElement('button');
+  s.className='step';s.innerHTML=`<span class="lbl">${p.dataset.step}</span><span class="tick"></span>`;
+  s.addEventListener('click',()=>go(i));
+  stepHost.appendChild(s);
+});
+/* Ⅱ評価セクションが全項目（支援者評価）入力済みかでステップに✓ */
+const RATING_PANEL_INDEX = {}; // panelIndex -> SECTIONS index
+panels.forEach((p,i)=>{
+  const m = p.dataset.step.match(/^Ⅱ-([abc])/);
+  if(m){ const map={a:0,b:1,c:2}; RATING_PANEL_INDEX[i]=map[m[1]]; }
+});
+function sectionFilled(panelIndex){
+  const si = RATING_PANEL_INDEX[panelIndex];
+  if(si===undefined) return false;
+  const sec = SECTIONS[si];
+  return sec.items.every((_,i)=>state.ratings[sec.key+'_'+i+'_staff']!==undefined);
+}
+function refreshSteps(){
+  [...stepHost.children].forEach((s,n)=>{
+    const tick=s.querySelector('.tick');
+    if(tick) tick.textContent = sectionFilled(n) ? '✓' : '';
+  });
+}
+function go(i){
+  cur=Math.max(0,Math.min(panels.length-1,i));
+  panels.forEach((p,n)=>p.classList.toggle('show',n===cur));
+  [...stepHost.children].forEach((s,n)=>{
+    s.classList.toggle('active',n===cur);
+    s.classList.toggle('done',n<cur);
+  });
+  document.getElementById('btnPrev').disabled = cur===0;
+  document.getElementById('btnNext').textContent = cur===panels.length-1?'完了':'次へ';
+  if(cur===panels.length-1) renderResult();
+  const active=stepHost.children[cur];active?.scrollIntoView({inline:'center',behavior:'smooth',block:'nearest'});
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+document.getElementById('btnNext').addEventListener('click',()=>go(cur+1));
+document.getElementById('btnPrev').addEventListener('click',()=>go(cur-1));
+
+/* ---------- result computation（協同評価＝支援者評価ベース） ---------- */
+function renderResult(){
+  save();
+  const scores={};
+  SECTIONS.forEach(sec=>{
+    let sum=0,cnt=0;
+    sec.items.forEach((_,i)=>{
+      const v=state.ratings[sec.key+'_'+i+'_staff'];
+      if(v>0){sum+=v;cnt++;}
+    });
+    scores[sec.key]=cnt?sum/cnt:null;
+  });
+  // bars
+  const bars=document.getElementById('bars');bars.innerHTML='';
+  SECTIONS.forEach(sec=>{
+    const v=scores[sec.key];
+    const pct=v?(v/SCALE_MAX*100):0;
+    bars.innerHTML+=`<div class="bar-row">
+      <span class="name">${sec.title}</span>
+      <span class="bar-track"><span class="bar-fill" data-pct="${pct}" style="width:0"></span></span>
+      <span class="bar-val">${v?v.toFixed(1):'－'}</span></div>`;
+  });
+  requestAnimationFrame(()=>{
+    document.querySelectorAll('.bar-fill').forEach(f=>{ f.style.width=f.dataset.pct+'%'; });
+  });
+
+  // 入力状況（支援者評価）
+  let total=0, done=0;
+  SECTIONS.forEach(sec=>sec.items.forEach((_,i)=>{ total++; if(state.ratings[sec.key+'_'+i+'_staff']!==undefined) done++; }));
+  document.getElementById('fillbar').textContent = `協同評価の入力：${done} / ${total} 項目` + (done<total?'（未入力の項目があります）':'（すべて入力済み）');
+
+  // 話し合いの参考メモ（弱めた／進路は決めない）
+  const vals=Object.values(scores).filter(v=>v!=null);
+  const avg=vals.length?vals.reduce((a,b)=>a+b,0)/vals.length:0;
+  const ratio=avg/SCALE_MAX;
+  const workRatio=(scores.exec||0)/SCALE_MAX;
+  const reco=document.getElementById('reco');reco.innerHTML='';
+  let tags=[],hint='';
+  if(!vals.length){
+    tags=['未評価']; hint='Ⅱの協同評価を入力すると、話し合いの参考が表示されます。';
+  }else if(ratio>=0.825 && workRatio>=0.75){
+    tags=['一般就労','A型']; hint='作業遂行・職業生活ともに安定の傾向。一般就労やA型も含めて本人と話し合う材料になります。';
+  }else if(ratio>=0.65){
+    tags=['A型','就労移行']; hint='働く力の土台があり、環境調整・訓練で伸びしろが見込める傾向です。';
+  }else if(ratio>=0.45){
+    tags=['B型','就労移行']; hint='支援を受けながら経験を積む段階の傾向。B型や就労移行が話題の中心になりやすいです。';
+  }else{
+    tags=['B型']; hint='手厚い支援のもと自分のペースで働く環境が合う傾向です。';
+  }
+  tags.forEach(t=>reco.innerHTML+=`<span class="t">${t}</span>`);
+  let intentNote = state.intents.length ? '　本人の意向：'+state.intents.join('、') : '';
+  document.getElementById('recoNote').textContent =
+    '⚠ これは協同評価の数値から機械的に出した参考の傾向です。就労選択支援は点数で進路を決める仕組みではありません。'+
+    '本人の希望（Ⅰ）と必要な配慮（Ⅲ）を踏まえ、本人と協同して選択肢を検討してください。'+intentNote;
+
+  // print meta
+  document.getElementById('printMeta').textContent =
+    `氏名：${state.f_name||'　'}　／　実施日：${state.f_date||'　'}　／　担当：${state.f_staff||'　'}　／　障害：${state.f_disability||'　'}`;
+}
+
+/* ---------- print ---------- */
+document.getElementById('btnPrint').addEventListener('click',()=>{renderResult();setTimeout(()=>window.print(),200);});
+
+restore();refreshSteps();go(0);
+</script>
+</body>
+</html>
