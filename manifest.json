@@ -1,14 +1,14 @@
 {
-  "name": "NEST 就労選択支援アセスメント",
-  "short_name": "NEST選択支援",
+  "name": "就労選択支援アセスメント",
+  "short_name": "就労選択支援",
   "description": "就労選択支援の支援員用アセスメント（本人本位の協同評価）",
   "lang": "ja",
   "start_url": ".",
   "scope": ".",
   "display": "standalone",
   "orientation": "portrait",
-  "background_color": "#f7f8f5",
-  "theme_color": "#2f6f4f",
+  "background_color": "#eef1f4",
+  "theme_color": "#2c6ad4",
   "icons": [
     { "src": "icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
     { "src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },

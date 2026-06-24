@@ -1,5 +1,5 @@
-/* NEST 就労選択支援アセスメント — Service Worker（オフライン対応） */
-const CACHE = 'nest-assess-v1';
+/* 就労選択支援アセスメント（決定版） — Service Worker（オフライン対応） */
+const CACHE = 'nest-assess-v2';
 const ASSETS = ['./', './index.html', './manifest.json', './icon-192.png', './icon-512.png'];
 
 self.addEventListener('install', e => {
