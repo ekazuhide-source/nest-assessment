@@ -1,6 +1,6 @@
 /* 就労選択支援アセスメント（決定版） — Service Worker（オフライン対応） */
-const CACHE = 'nest-assess-v3';
-const ASSETS = ['./', './index.html', './manifest.json', './icon-192.png', './icon-512.png'];
+const CACHE = 'nest-assess-v4';
+const ASSETS = ['./', './index.html', './manual.html', './manifest.json', './icon-192.png', './icon-512.png'];
 
 self.addEventListener('install', e => {
   e.waitUntil(

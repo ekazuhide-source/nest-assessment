@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#1f5fae">
+<title>NEST 就労選択支援アセスメント 取扱説明書</title>
+<style>
+  :root{--accent:#1f5fae;--ink:#1b2532;--ink2:#515c6b;--ink3:#8b95a3;--line:#e4e8ee;--bg:#eef2f6;--field:#fafbfc;
+    --warn:#c0392b;--ok:#2e7d52;}
+  *{box-sizing:border-box}
+  body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Hiragino Kaku Gothic ProN","Hiragino Sans","Yu Gothic",YuGothic,"Noto Sans JP",Meiryo,sans-serif;
+    background:var(--bg);color:var(--ink);line-height:1.75;font-size:15px;-webkit-text-size-adjust:100%}
+  .wrap{max-width:760px;margin:0 auto;padding:24px 18px 60px}
+  .head{display:flex;align-items:center;gap:13px;border-bottom:3px solid var(--accent);padding-bottom:14px;margin-bottom:8px}
+  .logo{width:42px;height:42px;border-radius:11px;background:linear-gradient(160deg,#2a6cc0,var(--accent));color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:13px;flex:0 0 auto}
+  h1{font-size:20px;margin:0;font-weight:800}
+  .sub{font-size:12.5px;color:var(--ink2);margin-top:2px}
+  .verbadge{display:inline-block;font-size:12px;font-weight:700;color:#fff;background:var(--ok);border-radius:8px;padding:3px 10px;margin-top:6px}
+  h2{font-size:16px;margin:26px 0 8px;padding-left:11px;border-left:5px solid var(--accent);font-weight:800}
+  h3{font-size:14px;margin:16px 0 4px;font-weight:700}
+  p,li{font-size:14px}
+  ol,ul{padding-left:22px;margin:6px 0}
+  li{margin:3px 0}
+  .card{background:#fff;border:1px solid var(--line);border-radius:13px;padding:15px 17px;margin:10px 0;box-shadow:0 1px 2px rgba(22,33,52,.05)}
+  .step{display:flex;gap:11px;align-items:flex-start;margin:9px 0}
+  .step .n{flex:0 0 auto;width:24px;height:24px;border-radius:7px;background:var(--accent);color:#fff;font-weight:800;font-size:12px;display:flex;align-items:center;justify-content:center}
+  .box{border-radius:13px;padding:14px 16px;margin:12px 0}
+  .box.warn{background:#fbf4ec;border:1px solid #ecd7bf;color:#7a4a28}
+  .box.sec{background:#eaf2fb;border:1px solid #c7ddf3}
+  .box.danger{background:#fdeeec;border:1px solid #f0c4bd;color:#8a2b1c}
+  .box h3{margin-top:0}
+  table{width:100%;border-collapse:collapse;margin:10px 0;font-size:13.5px}
+  th,td{border:1px solid var(--line);padding:8px 10px;text-align:left;vertical-align:top}
+  th{background:#f4f7fb;font-weight:700}
+  .tag{display:inline-block;font-size:11px;font-weight:700;border-radius:6px;padding:2px 8px}
+  .tag.ok{background:#e3f1ea;color:var(--ok)}
+  .tag.ng{background:#fbe9e7;color:var(--warn)}
+  code{background:#eef2f6;border-radius:5px;padding:1px 6px;font-size:13px}
+  .foot{margin-top:30px;border-top:1px solid var(--line);padding-top:12px;font-size:11.5px;color:var(--ink3)}
+  a{color:var(--accent)}
+  @media print{body{background:#fff}.wrap{max-width:none;padding:0}.card,.box{box-shadow:none}.noprint{display:none}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="head">
+    <div class="logo">NEST</div>
+    <div>
+      <h1>就労選択支援アセスメント 取扱説明書</h1>
+      <div class="sub">支援員向け／作業場面等の就労アセスメント実施記録（富士圏域共通様式 準拠）</div>
+      <div class="verbadge">v5.0　セキュリティ対応版（パスコード＋データ暗号化）</div>
+    </div>
+  </div>
+
+  <h2>1. このアプリについて</h2>
+  <div class="card">
+    <p>就労選択支援の支援員が、作業場面の観察にもとづいて利用者のアセスメントを記録し、帳票（提出様式）を作成するためのアプリです。スマホ・iPad・パソコンのブラウザで動きます。</p>
+    <p>公開URL：<a href="https://ekazuhide-source.github.io/nest-assessment/">https://ekazuhide-source.github.io/nest-assessment/</a></p>
+  </div>
+
+  <h2>2. スマホ・iPadで「アプリ」として使う</h2>
+  <div class="card">
+    <p>※ iOSは必ず <b>Safari</b> で開いてください（LINE/メール内のブラウザ、Chromeアプリからではうまくいきません）。</p>
+    <div class="step"><span class="n">1</span><span>Safariで上記URLを開く</span></div>
+    <div class="step"><span class="n">2</span><span>下中央の「共有」ボタン（□に↑のマーク）をタップ</span></div>
+    <div class="step"><span class="n">3</span><span>「ホーム画面に追加」をタップ →「追加」</span></div>
+    <div class="step"><span class="n">4</span><span>ホーム画面のアイコンから全画面アプリとして起動（電波がなくても起動できます）</span></div>
+    <p style="font-size:12.5px;color:var(--ink2)">iPadは「共有」ボタンが画面右上にあります。Androidは Chrome のメニュー（⋮）→「ホーム画面に追加」。</p>
+  </div>
+
+  <h2>3. 使い方（画面の流れ）</h2>
+  <div class="card">
+    <h3>① 上部の基本情報</h3>
+    <p>対象者名／作業先（事業所・企業名）／就労担当事業所／評価期間／担当者を入力します。</p>
+    <h3>② 実施記録（圏域共通様式）＝提出様式</h3>
+    <p>「①基本的な労働習慣 ②社会生活 ③職業スキル」の3領域・全14項目を、各項目の<b>評価ポイント</b>を見ながら <b>A／B／C／D</b> で評価し、必要に応じてコメントを書きます。</p>
+    <ul><li>A＝適切にできる　B＝概ねできる　C＝適切にできない　D＝できない（パソコン・軽作業は D＝未実施）</li></ul>
+    <h3>③ 補足（支援用・提出様式の対象外）</h3>
+    <p>本人の希望・ニーズ／必要な配慮・環境／本人の受け止め を記録します（本人本位の検討の参考）。</p>
+    <h3>④ 帳票・総評（提出用）</h3>
+    <p>実施記録の表と<b>総評</b>（作業面・生活面を踏まえた進路の見立て）をまとめ、「<b>帳票を印刷</b>」でPDF/紙に出力します。参考スコア（3領域の三角形＋5観点のペンタゴン）は<b>内部参考</b>で、提出様式には含めません。</p>
+    <h3>複数の対象者</h3>
+    <p>上部の選択メニューで対象者を切り替え。「＋新規」で追加、「削除」で現在の対象者の記録を削除します。入力は自動保存されます。</p>
+  </div>
+
+  <h2>4. データの保存と保護（重要）</h2>
+  <div class="card">
+    <ul>
+      <li><b>保存場所</b>：入力データは<b>その端末の中だけ</b>に保存されます。サーバには送信されません。端末どうしで同期もしません（iPadで入れた記録はそのiPadだけ）。</li>
+      <li><b>暗号化</b>：保存データはパスコードで<b>暗号化</b>されます。パスコードを知らない人は、端末を開いても中身を読めません。</li>
+      <li><b>共有</b>：他の人へ渡す手段は「<b>PDFを印刷して渡す</b>」です。PDFの保存先は会社の管理場所（NAS等）にしてください。個人のクラウドには保存しないでください。</li>
+    </ul>
+    <div class="box sec">
+      <h3>🔒 起動時のパスコード</h3>
+      <p>はじめて使うときに<b>パスコードを設定</b>します。次回からは起動時にパスコードを入力して開きます。要配慮個人情報を扱うため、端末にも画面ロック（パスコード/Face ID）を必ず設定してください。</p>
+    </div>
+  </div>
+
+  <h2 id="version">5. ★バージョンとセキュリティ（必読）</h2>
+  <div class="box danger">
+    <h3>セキュリティ対策済みは「最新版（v5.0以降）」だけです</h3>
+    <p>古いリンク・以前保存したHTMLファイル・古いキャッシュには、<b>パスコードも暗号化もありません（ノンセキュリティ）</b>。実際の利用者データには使わないでください。</p>
+  </div>
+  <table>
+    <tr><th>見分け方</th><th>判定</th></tr>
+    <tr><td>起動時に「<b>パスコードを設定／入力</b>」の画面が出る</td><td><span class="tag ok">最新版・対策済み</span>（パスコード＋暗号化）</td></tr>
+    <tr><td>パスコード画面が出ず、いきなり入力画面が開く</td><td><span class="tag ng">旧版・非セキュリティ</span>（使用しない）</td></tr>
+  </table>
+  <div class="card">
+    <h3>確実に最新版を使うには</h3>
+    <ol>
+      <li>必ず公開URL <a href="https://ekazuhide-source.github.io/nest-assessment/">…/nest-assessment/</a> から開く（古いブックマーク・配布ファイルは使わない）。</li>
+      <li>ホーム画面のアプリは、オンラインで一度開き直すと最新版へ自動更新されます。</li>
+      <li>起動時に<b>パスコード画面が出ること</b>を確認してから利用する。</li>
+      <li>ロック画面・帳票の下部に <code>v5.0 セキュリティ対応</code> の表示があることを確認。</li>
+    </ol>
+  </div>
+
+  <h2>6. パスコードの注意（必読）</h2>
+  <div class="box warn">
+    <p><b>パスコードは復元できません。</b>忘れると、その端末に保存した記録は<b>取り出せなくなります</b>。また、ブラウザの「サイトデータ消去」やアプリ削除でも記録は消えます（自動バックアップはありません）。</p>
+    <p>対策：<b>記入が終わったら必ず帳票PDFを管理場所（NAS等）に保存</b>してください。PDFが正式な控え・バックアップになります。</p>
+  </div>
+
+  <h2>7. 困ったとき</h2>
+  <div class="card">
+    <ul>
+      <li>パスコード画面が出ない → 旧版の可能性。公開URLから開き直してください。</li>
+      <li>記録が消えた → ブラウザのデータ消去や別ブラウザ・旧版での閲覧が原因のことがあります。PDFの控えをご確認ください。</li>
+      <li>運用・様式に関する質問は、就労担当（NEST）までご確認ください。</li>
+    </ul>
+  </div>
+
+  <div class="foot">
+    NEST 就労選択支援アセスメント 取扱説明書　v5.0（セキュリティ対応：パスコード＋データ暗号化）／富士圏域共通様式 準拠。<br>
+    本書・本アプリに実在の利用者情報は含みません。
+  </div>
+
+</div>
+</body>
+</html>

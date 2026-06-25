@@ -171,6 +171,10 @@
   .lockbtn:active{transform:translateY(1px)}
   .lockerr{font-size:12.5px;color:#c0392b;min-height:18px;margin-bottom:8px;font-weight:600}
   .locklink{display:block;width:100%;margin-top:12px;background:none;border:none;color:var(--ink-3);font-size:12px;text-decoration:underline;cursor:pointer}
+  .lockfoot{margin-top:16px;text-align:center;font-size:11px;color:var(--ink-3);border-top:1px solid var(--line-2);padding-top:12px;line-height:1.7}
+  .lockfoot a{color:var(--accent)}
+  .repfoot{text-align:center;font-size:11px;color:var(--ink-3);padding:6px 0 2px}
+  .repfoot a{color:var(--accent)}
 
   @media (min-width:860px){.shell{height:100vh;overflow:hidden}.body{min-height:0}.main{overflow:auto}header{position:static}}
   @media (max-width:859px){.sidebar{display:none}.tabs{display:flex}.main{padding:18px 15px}.rep-grid{grid-template-columns:1fr 1fr}.points{grid-template-columns:1fr}}
@@ -221,6 +225,7 @@
 (function(){
   "use strict";
   var KEY='nest_assessment_v4';
+  var APP_VER='5.0';
 
   /* 富士圏域共通様式 A/B/C/D（各項目に評価ポイント） */
   var LV=[{v:'A',word:'できる',color:'#4f9d6b'},{v:'B',word:'概ね',color:'#4f8fc9'},{v:'C',word:'不十分',color:'#d49a3c'},{v:'D',word:'できない',color:'#cf6a55'}];
@@ -319,7 +324,7 @@
   window.addEventListener('pagehide',function(){clearTimeout(_st);encryptState();});
   function showLock(inner){var o=document.getElementById('lockOverlay');if(!o){o=document.createElement('div');o.id='lockOverlay';o.className='lockscreen';document.body.appendChild(o);}o.innerHTML=inner;o.style.display='flex';return o;}
   function hideLock(){var o=document.getElementById('lockOverlay');if(o)o.style.display='none';}
-  function lockCard(title,desc,body){return '<div class="lockcard"><div class="lockh">'+title+'</div><div class="lockp">'+desc+'</div>'+body+'</div>';}
+  function lockCard(title,desc,body){return '<div class="lockcard"><div class="lockh">'+title+'</div><div class="lockp">'+desc+'</div>'+body+'<div class="lockfoot">🔒 セキュリティ対応版 v'+APP_VER+'（パスコード＋暗号化）<br><a href="manual.html" target="_blank" rel="noopener">使い方・データの取扱い（取扱説明）</a></div></div>';}
   function showSetup(resolve){
     var o=showLock(lockCard('パスコードを設定','この端末の入力データを暗号化して保護します。<b>パスコードは復元できません</b>ので、忘れないものにしてください。',
       '<input type="password" id="lp1" placeholder="パスコード（4文字以上）" autocomplete="new-password"><input type="password" id="lp2" placeholder="もう一度入力" autocomplete="new-password"><div class="lockerr" id="lerr"></div><button class="lockbtn" id="lset">設定して開始</button>'));
@@ -514,7 +519,8 @@
         +'<div class="pcard"><div class="box-h">必要な配慮・環境 <span class="pill-tag sup">補足</span></div><div class="echo-h">あると働きやすい環境・配慮</div><div>'+envTags+'</div>'+envEcho+'</div>'
         +'<div class="pcard"><div class="box-h">本人の受け止め <span class="pill-tag sup">補足</span></div><div class="echo'+(tx(sub.understand)?'':' empty')+'">'+(tx(sub.understand)||'（未記入）')+'</div></div>'
       +'</div>'
-      +'<div class="hintnote no-print">入力は自動保存されます。「帳票を印刷」で提出様式（総評まで）＋補足を出力します。</div></div>';
+      +'<div class="repfoot">NEST就労選択支援アセスメント v'+APP_VER+'（セキュリティ対応：パスコード＋データ暗号化）／富士圏域共通様式 準拠</div>'
+      +'<div class="hintnote no-print">入力は自動保存（暗号化）されます。「帳票を印刷」で提出様式（総評まで）＋補足を出力。 <a href="manual.html" target="_blank" rel="noopener">使い方・取扱説明</a></div></div>';
   }
 
   function renderAll(){renderOptions();fillMeta();renderTabs();renderSidebar();renderMain();}
