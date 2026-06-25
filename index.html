@@ -161,6 +161,16 @@
   .refscore .bar i{display:block;height:100%;border-radius:5px}
   .refscore .av{font-size:13px;font-weight:800;width:64px;text-align:right}
   .hintnote{font-size:11.5px;color:#9aa4b1;text-align:center;padding:6px 0 16px}
+  /* パスコードロック */
+  .lockscreen{position:fixed;inset:0;z-index:200;display:flex;align-items:center;justify-content:center;padding:24px;background:linear-gradient(160deg,#23548f,#15315a)}
+  .lockcard{background:#fff;border-radius:18px;box-shadow:0 20px 60px rgba(0,0,0,.32);padding:26px 24px;max-width:360px;width:100%}
+  .lockh{font-size:19px;font-weight:800;margin-bottom:8px}
+  .lockp{font-size:13px;color:var(--ink-2);line-height:1.65;margin-bottom:16px}
+  .lockscreen input{width:100%;height:48px;padding:0 14px;border:1px solid #d4dbe3;border-radius:11px;font-size:16px;background:var(--field);margin-bottom:11px}
+  .lockbtn{width:100%;height:48px;border:none;border-radius:11px;background:var(--accent);color:#fff;font-size:15px;font-weight:700;cursor:pointer;box-shadow:0 2px 8px rgba(31,95,174,.3)}
+  .lockbtn:active{transform:translateY(1px)}
+  .lockerr{font-size:12.5px;color:#c0392b;min-height:18px;margin-bottom:8px;font-weight:600}
+  .locklink{display:block;width:100%;margin-top:12px;background:none;border:none;color:var(--ink-3);font-size:12px;text-decoration:underline;cursor:pointer}
 
   @media (min-width:860px){.shell{height:100vh;overflow:hidden}.body{min-height:0}.main{overflow:auto}header{position:static}}
   @media (max-width:859px){.sidebar{display:none}.tabs{display:flex}.main{padding:18px 15px}.rep-grid{grid-template-columns:1fr 1fr}.points{grid-template-columns:1fr}}
@@ -284,15 +294,82 @@
   function tx(v){return (v&&String(v).trim())?esc(v):'';}
 
   var state;
-  function load(){
-    try{var raw=localStorage.getItem(KEY);if(raw){var d=JSON.parse(raw);if(d&&d.subjects&&d.subjects.length){
-      d.subjects.forEach(normalize);
-      var cid=d.currentId&&d.subjects.some(function(s){return s.id===d.currentId;})?d.currentId:d.subjects[0].id;
-      return {subjects:d.subjects,currentId:cid,view:'r1'};
-    }}}catch(e){}
-    var s=blank();return {subjects:[s],currentId:s.id,view:'r1'};
+  /* ===== パスコードロック＋保存データ暗号化（AES-GCM / PBKDF2） ===== */
+  var EKEY='nest_assess_enc_v1';
+  var cryptoKey=null, cryptoSalt=null;
+  var SUB=(window.crypto&&window.crypto.subtle)?window.crypto.subtle:null;
+  function b64(buf){return btoa(String.fromCharCode.apply(null,new Uint8Array(buf)));}
+  function unb64(s){return Uint8Array.from(atob(s),function(c){return c.charCodeAt(0);});}
+  function freshState(){var s=blank();return {subjects:[s],currentId:s.id,view:'r1'};}
+  async function deriveKey(pass,salt){
+    var base=await SUB.importKey('raw',new TextEncoder().encode(pass),{name:'PBKDF2'},false,['deriveKey']);
+    return SUB.deriveKey({name:'PBKDF2',salt:salt,iterations:150000,hash:'SHA-256'},base,{name:'AES-GCM',length:256},false,['encrypt','decrypt']);
   }
-  function save(){try{localStorage.setItem(KEY,JSON.stringify({subjects:state.subjects,currentId:state.currentId}));}catch(e){}}
+  async function encryptState(){
+    if(!cryptoKey||!state)return;
+    try{
+      var iv=window.crypto.getRandomValues(new Uint8Array(12));
+      var data=new TextEncoder().encode(JSON.stringify({subjects:state.subjects,currentId:state.currentId}));
+      var ct=await SUB.encrypt({name:'AES-GCM',iv:iv},cryptoKey,data);
+      localStorage.setItem(EKEY,JSON.stringify({v:1,salt:b64(cryptoSalt),iv:b64(iv),ct:b64(ct)}));
+    }catch(e){}
+  }
+  var _st;
+  function save(){clearTimeout(_st);_st=setTimeout(encryptState,250);}
+  window.addEventListener('pagehide',function(){clearTimeout(_st);encryptState();});
+  function showLock(inner){var o=document.getElementById('lockOverlay');if(!o){o=document.createElement('div');o.id='lockOverlay';o.className='lockscreen';document.body.appendChild(o);}o.innerHTML=inner;o.style.display='flex';return o;}
+  function hideLock(){var o=document.getElementById('lockOverlay');if(o)o.style.display='none';}
+  function lockCard(title,desc,body){return '<div class="lockcard"><div class="lockh">'+title+'</div><div class="lockp">'+desc+'</div>'+body+'</div>';}
+  function showSetup(resolve){
+    var o=showLock(lockCard('パスコードを設定','この端末の入力データを暗号化して保護します。<b>パスコードは復元できません</b>ので、忘れないものにしてください。',
+      '<input type="password" id="lp1" placeholder="パスコード（4文字以上）" autocomplete="new-password"><input type="password" id="lp2" placeholder="もう一度入力" autocomplete="new-password"><div class="lockerr" id="lerr"></div><button class="lockbtn" id="lset">設定して開始</button>'));
+    var go=async function(){
+      var p1=o.querySelector('#lp1').value,p2=o.querySelector('#lp2').value,err=o.querySelector('#lerr');
+      if(p1.length<4){err.textContent='4文字以上にしてください';return;}
+      if(p1!==p2){err.textContent='2つのパスコードが一致しません';return;}
+      err.textContent='処理中…';
+      cryptoSalt=window.crypto.getRandomValues(new Uint8Array(16));
+      cryptoKey=await deriveKey(p1,cryptoSalt);
+      state=freshState();await encryptState();
+      try{localStorage.removeItem('nest_assessment_v4');}catch(e){}
+      hideLock();resolve();
+    };
+    o.querySelector('#lset').addEventListener('click',go);
+    o.querySelector('#lp2').addEventListener('keydown',function(e){if(e.key==='Enter')go();});
+    o.querySelector('#lp1').focus();
+  }
+  function showUnlock(env,resolve){
+    var o=showLock(lockCard('パスコードを入力','保存されたアセスメントのロックを解除します。',
+      '<input type="password" id="lp1" placeholder="パスコード" autocomplete="current-password"><div class="lockerr" id="lerr"></div><button class="lockbtn" id="lopen">解除して開く</button><button class="locklink" id="lforget">パスコードを忘れた（全データを消去して再設定）</button>'));
+    var go=async function(){
+      var p1=o.querySelector('#lp1').value,err=o.querySelector('#lerr');
+      if(!p1){err.textContent='パスコードを入力してください';return;}
+      err.textContent='確認中…';
+      try{
+        var salt=unb64(env.salt),key=await deriveKey(p1,salt);
+        var pt=await SUB.decrypt({name:'AES-GCM',iv:unb64(env.iv)},key,unb64(env.ct));
+        var d=JSON.parse(new TextDecoder().decode(pt));
+        d.subjects.forEach(normalize);
+        var cid=d.currentId&&d.subjects.some(function(s){return s.id===d.currentId;})?d.currentId:d.subjects[0].id;
+        cryptoKey=key;cryptoSalt=salt;state={subjects:d.subjects,currentId:cid,view:'r1'};
+        hideLock();resolve();
+      }catch(e){err.textContent='パスコードが違います';}
+    };
+    o.querySelector('#lopen').addEventListener('click',go);
+    o.querySelector('#lp1').addEventListener('keydown',function(e){if(e.key==='Enter')go();});
+    o.querySelector('#lforget').addEventListener('click',function(){
+      if(!confirm('保存された全データを消去して、新しいパスコードを設定します。元に戻せません。よろしいですか？'))return;
+      localStorage.removeItem(EKEY);showSetup(resolve);
+    });
+    o.querySelector('#lp1').focus();
+  }
+  function unlockFlow(){
+    return new Promise(function(resolve){
+      if(!SUB){showLock(lockCard('セキュア接続が必要','このアプリのパスコード保護は <b>https</b> でのみ有効です。ホーム画面のアプリ（公開URL）から開いてください。','<button class="lockbtn" onclick="location.reload()">再読み込み</button>'));return;}
+      var env=null;try{env=JSON.parse(localStorage.getItem(EKEY)||'null');}catch(e){}
+      if(env&&env.ct)showUnlock(env,resolve);else showSetup(resolve);
+    });
+  }
   function cur(){return state.subjects.filter(function(s){return s.id===state.currentId;})[0]||state.subjects[0];}
 
   function domStat(d,sub){var rated=d.items.filter(function(it){return sub.rec[it.id];}).length;return {rated:rated,total:d.items.length};}
@@ -475,7 +552,7 @@
   $('btnClear').addEventListener('click',function(){if(!confirm('現在の対象者の入力（評価・コメント・総評・補足）をすべてクリアしますか？'))return;var s=cur();var keep=normalize({id:s.id,name:s.name,work:s.work,prov:s.prov,ps:s.ps,pe:s.pe,staff:s.staff});state.subjects=state.subjects.map(function(x){return x.id===s.id?keep:x;});save();renderAll();});
   $('btnPrint').addEventListener('click',function(){state.view='report';renderTabs();renderSidebar();renderMain();setTimeout(function(){window.print();},250);});
 
-  state=load();renderAll();
+  (async function(){ await unlockFlow(); renderAll(); })();
 })();
 
 if('serviceWorker' in navigator){window.addEventListener('load',function(){navigator.serviceWorker.register('sw.js').catch(function(){});});}
